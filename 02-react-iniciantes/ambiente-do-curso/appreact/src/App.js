@@ -22,23 +22,26 @@ const produtos = [
 ];
 
 const App = () => {
+  // Origamid: "Procure fazer o filtro antes dos valores maior que 1500"
+  const dados = produtos.filter(({ preco }) =>
+    Number(preco.replace('R$ ', '') > 1500),
+  );
+
   return (
     <section>
-      {produtos
-        .filter(({ preco }) => Number(preco.replace('R$ ', '') > 1500))
-        .map(({ nome, preco, cores }) => (
-          <div key={nome}>
-            <h1>{nome}</h1>
-            <p>Preço: R$ {preco}</p>
-            <ul>
-              {cores.map((cor) => (
-                <li key={cor} style={{ color: 'white', backgroundColor: cor }}>
-                  {cor}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      {dados.map(({ id, nome, preco, cores }) => (
+        <div key={id}>
+          <h1>{nome}</h1>
+          <p>Preço: {preco}</p>
+          <ul>
+            {cores.map((cor) => (
+              <li key={cor} style={{ color: 'white', backgroundColor: cor }}>
+                {cor}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </section>
   );
 };

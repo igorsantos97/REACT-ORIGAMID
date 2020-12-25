@@ -8,14 +8,21 @@ import Menu from './Menu';
 // Quebre em componentes o que precisar ser reutilizado
 // Dica: const { pathname } = window.location; (puxa o caminho do URL)
 
-const { pathname } = window.location;
-
 const App = () => {
+  const { pathname } = window.location;
+
+  let Component;
+  if (pathname === '/produtos') {
+    Component = Produtos;
+  } else {
+    Component = Home;
+  }
+
   return (
-    <>
+    <section>
       <Menu />
-      {pathname === '/' ? <Home /> : <Produtos />}
-    </>
+      <Component />
+    </section>
   );
 };
 

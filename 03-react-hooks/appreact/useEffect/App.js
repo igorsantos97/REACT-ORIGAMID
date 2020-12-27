@@ -12,27 +12,23 @@ const App = () => {
   const [produto, setProduto] = React.useState(null);
 
   React.useEffect(() => {
-    const productPreference = localStorage.getItem('produto');
-    productPreference !== 'null' && fetchProduct(productPreference);
+    const produtoLocalStorage = localStorage.getItem('produto');
+    if (produtoLocalStorage !== null) setProduto(produtoLocalStorage);
   }, []);
 
-  async function fetchProduct(product) {
-    const response = await fetch(
-      `https://ranekapi.origamid.dev/json/api/produto/${product}`,
-    );
-    const json = await response.json();
-    localStorage.setItem('produto', product);
-    setProduto(json);
-  }
+  React.useEffect(() => {
+    if (produto != null) {
+      localStorage.setItem('produto', produto);
+    }
+  }, [produto]);
 
   function handleClick({ target }) {
-    const targetProduct = target.innerText;
-    fetchProduct(targetProduct);
+    setProduto(target.innerText);
   }
 
   return (
     <div>
-      <h1>Preferência: {produto && <span>{produto.id}</span>}</h1>
+      <h1>Preferência: {produto}</h1>
       <button style={{ margin: '.5rem' }} onClick={handleClick}>
         notebook
       </button>
@@ -40,7 +36,7 @@ const App = () => {
         smartphone
       </button>
 
-      {produto && <Produto produto={produto} />}
+      <Produto produto={produto} />
     </div>
   );
 };

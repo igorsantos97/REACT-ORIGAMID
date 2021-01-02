@@ -1,18 +1,60 @@
 import React from 'react';
 
+const formFields = [
+  {
+    id: 'nome',
+    label: 'Nome',
+    type: 'text',
+  },
+  {
+    id: 'email',
+    label: 'Email',
+    type: 'email',
+  },
+  {
+    id: 'senha',
+    label: 'Senha',
+    type: 'password',
+  },
+  {
+    id: 'cep',
+    label: 'Cep',
+    type: 'text',
+  },
+  {
+    id: 'rua',
+    label: 'Rua',
+    type: 'text',
+  },
+  {
+    id: 'numero',
+    label: 'Numero',
+    type: 'text',
+  },
+  {
+    id: 'bairro',
+    label: 'Bairro',
+    type: 'text',
+  },
+  {
+    id: 'cidade',
+    label: 'Cidade',
+    type: 'text',
+  },
+  {
+    id: 'estado',
+    label: 'Estado',
+    type: 'text',
+  },
+];
+
 const App = () => {
   const [message, setMessage] = React.useState('');
-  const [form, setForm] = React.useState({
-    nome: '',
-    email: '',
-    senha: '',
-    cep: '',
-    rua: '',
-    numero: '',
-    bairro: '',
-    cidade: '',
-    estado: '',
-  });
+  const [form, setForm] = React.useState(
+    formFields.reduce((acc, field) => {
+      return { ...acc, [field.id]: '' };
+    }, {}),
+  );
 
   function handleChange({ target }) {
     const { id, value } = target;
@@ -31,71 +73,21 @@ const App = () => {
         },
         body: JSON.stringify(form),
       },
-    );
-    setMessage(response);
+    ).then((response) => {
+      setMessage(response);
+    });
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="nome">Nome</label>
-      <input id="nome" type="text" value={form.nome} onChange={handleChange} />
-
-      <label htmlFor="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        value={form.email}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="senha">Senha</label>
-      <input
-        id="senha"
-        type="password"
-        value={form.senha}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="cep">Cep</label>
-      <input id="cep" type="text" value={form.cep} onChange={handleChange} />
-
-      <label htmlFor="rua">Rua</label>
-      <input id="rua" type="text" value={form.rua} onChange={handleChange} />
-
-      <label htmlFor="numero">Numero</label>
-      <input
-        id="numero"
-        type="text"
-        value={form.numero}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="bairro">Bairro</label>
-      <input
-        id="bairro"
-        type="text"
-        value={form.bairro}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="cidade">Cidade</label>
-      <input
-        id="cidade"
-        type="text"
-        value={form.cidade}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="estado">Estado</label>
-      <input
-        id="estado"
-        type="text"
-        value={form.estado}
-        onChange={handleChange}
-      />
-
+      {formFields.map(({ id, label, type }) => (
+        <div key={id}>
+          <label htmlFor={id}>{label}</label>
+          <input type={type} id={id} value={form[id]} onChange={handleChange} />
+        </div>
+      ))}
       <button>Enviar</button>
-      {message && message.ok && <p>Dados Enviados e Cadastrados</p>}
+      {message && message.ok && <p>Usuário Criado</p>}
     </form>
   );
 };

@@ -1,0 +1,15 @@
+.titulo {
+  color: #43c;
+}
+
+.preco {
+  font-weight: peso;
+}
+
+@value peso: bold;
+@value cor: red;
+
+:global .container {
+  max-width: 900px;
+  background: red;
+}

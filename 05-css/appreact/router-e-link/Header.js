@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   return (
     <nav>
-      // activeStyle: Para não precisar chamar // CSS externo
+      {/* // activeStyle: Para não precisar chamar
+      // CSS externo */}
       <NavLink to="/" activeStyle={{ color: 'tomato' }} end>
         Home
       </NavLink>{' '}
